@@ -65,6 +65,17 @@ module MakeRateable
       
       result
     end
+    
+    private
+    
+    def method_missing(method, *args)
+      resource = method.to_s.split("_").last
+      if rateable_attributes.include?(resource.to_sym) && resourcemethod.to_s.match /^rate_/
+        # this will find method calls like rate_accuracy
+        rate(args[0], args[1], resource)
+      end
+    end
+    
   end
 end
 
