@@ -1,5 +1,5 @@
 module MakeRateable
-  def self.include(base)
+  def self.included(base)
     base.extend ClassMethods
   end
   
