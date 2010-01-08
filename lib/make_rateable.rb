@@ -46,7 +46,7 @@ module MakeRateable
     end
     
     def was_rated_by?(user, attribute=nil)
-      ratings.find(:first, :conditions => {:user => user, :rateable_attribute => attribute}).present?
+      ratings.find(:first, :conditions => {:user_id => user.id, :rateable_attribute => attribute}).present?
     end
     
     def ratings_by(user, attribute=nil)
