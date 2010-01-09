@@ -9,9 +9,9 @@ module MakeRateable
       has_many :ratings, :as => :rateable
       
       options[:max_rating] ||= 5
-      options[:attributes] ||= []
+      options[:rateable_attributes] ||= []
       
-      { :max_rating => options[:max_rating], :rateable_attributes => options[:attributes] }.each do |accessor, value|
+      { :max_rating => options[:max_rating], :rateable_attributes => options[:rateable_attributes] }.each do |accessor, value|
         next if respond_to?(accessor)
         class_inheritable_accessor accessor
         attr_protected accessor
