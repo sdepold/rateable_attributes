@@ -27,7 +27,8 @@ Gem::Specification.new do |s|
      "generators/templates/star_unrated.png",
      "init.rb",
      "lib/make_rateable.rb",
-     "lib/rating.rb"
+     "lib/rating.rb",
+     "make_rateable.gemspec"
   ]
   s.homepage = %q{http://github.com/sdepold/make_rateable}
   s.rdoc_options = ["--charset=UTF-8"]
