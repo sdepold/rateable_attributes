@@ -1,0 +1,25 @@
+= MakeRateable
+
+MakeRateable is a re-implementation of ActsAsRateable for multiple attribute support.
+
+== Usage
+
+=== Preparation
+
+In order to create the rating table just run the following command:
+  
+  script/generate make_rateable
+  
+This will generate a migration. Run rake db:migrate.
+
+=== In the model
+  
+  make_rateable :attributes => [:graphics, :sound, :whatever]
+  
+This allows you to rate the model for the attributes graphics, sound and whatever.
+To do so use
+
+  my_model.rate(3, a_user[, :the_attribute]) # you can just ignore the attribute to create a general rating
+  my_model.rate_graphics(3, a_user) # equals my_model.rate(3, a_user, :graphics)
+  
+=== To be continued...
