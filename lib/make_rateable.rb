@@ -27,13 +27,23 @@ module MakeRateable
   end
   
   module InstanceMethods
+    def is_valid_rateable_attribute?(attribute)
+      attribute.nil? || rateable_attributes.include?(attribute.to_sym)
+    end
+    
+    def validate_rateable_attribute!(attribute)
+      raise "#{attribute} is not valid for this model. Choose one of the following: #{rateable_attributes.join(', ')}" if !is_valid_rateable_attribute?(attribute)
+      true
+    end
+    
     def rate(rating, user, attribute=nil)
-      raise "#{attribute} is not valid for this model. Choose one of the following: #{rateable_attributes.join(', ')}" if attribute.present? && !rateable_attributes.include?(attribute.to_sym)
+      validate_rateable_attribute!(attribute)
       return rating_from(user, attribute) if was_rated_by?(user, attribute)
       Rating.create({:user => user, :rating => rating, :rateable_attribute => attribute, :rateable => self}) 
     end
     
     def rate!(rating, user, attribute=nil)
+      validate_rateable_attribute!(attribute)
       Rating.create!({:user => user, :rating => rating, :rateable_attribute => attribute, :rateable => self}) 
     end
     
