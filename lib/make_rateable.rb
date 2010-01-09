@@ -33,6 +33,10 @@ module MakeRateable
       Rating.create({:user => user, :rating => rating, :rateable_attribute => attribute, :rateable => self}) 
     end
     
+    def rate!(rating, user, attribute=nil)
+      Rating.create!({:user => user, :rating => rating, :rateable_attribute => attribute, :rateable => self}) 
+    end
+    
     def average_rating(attribute=nil)
       all_ratings = ratings.find(:all, :conditions => {:rateable_attribute => attribute})
       return 0.0 if all_ratings.empty?
