@@ -14,7 +14,7 @@ This will generate a migration. Run rake db:migrate.
 
 === In the model
   
-  make_rateable :rateable_attributes => [:graphics, :sound, :whatever]
+  make_rateable :graphics, :sound, :whatever, :range => 1..5
   
 This allows you to rate the model for the attributes graphics, sound and whatever.
 To do so use

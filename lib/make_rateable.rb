@@ -4,14 +4,14 @@ module MakeRateable
   end
   
   module ClassMethods
-    def make_rateable(options={})
+    def make_rateable(*args)
       include ActionView::Helpers
       has_many :ratings, :as => :rateable
       
-      options[:max_rating] ||= 5
-      options[:rateable_attributes] ||= []
+      options = args.extract_options!
+      options[:range] ||= 1..5
       
-      { :max_rating => options[:max_rating], :rateable_attributes => options[:rateable_attributes] }.each do |accessor, value|
+      { :rateable_range => options[:range], :rateable_attributes => args }.each do |accessor, value|
         next if respond_to?(accessor)
         class_inheritable_accessor accessor
         attr_protected accessor
@@ -31,19 +31,20 @@ module MakeRateable
       attribute.nil? || rateable_attributes.include?(attribute.to_sym)
     end
     
-    def validate_rateable_attribute!(attribute)
-      raise "#{attribute} is not valid for this model. Choose one of the following: #{rateable_attributes.join(', ')}" if !is_valid_rateable_attribute?(attribute)
+    def validate_rating_data!(rating, attribute)
+      raise "#{attribute} is not valid for this model. Choose one of the following: #{rateable_attributes.join(', ')}" unless is_valid_rateable_attribute?(attribute)
+      raise "The rating #{rating} is not in allowed rating range: #{rateable_range.to_s}" unless rateable_range.include?(rating)
       true
     end
     
     def rate(rating, user, attribute=nil)
-      validate_rateable_attribute!(attribute)
+      validate_rating_data!(rating, attribute)
       return rating_from(user, attribute) if was_rated_by?(user, attribute)
       Rating.create({:user => user, :rating => rating, :rateable_attribute => attribute, :rateable => self}) 
     end
     
     def rate!(rating, user, attribute=nil)
-      validate_rateable_attribute!(attribute)
+      validate_rating_data!(rating, attribute)
       Rating.create!({:user => user, :rating => rating, :rateable_attribute => attribute, :rateable => self}) 
     end
     
@@ -58,7 +59,7 @@ module MakeRateable
     end
     
     def average_rating_percentage(attribute=nil)
-      average_rating(attribute) * 100 / max_rating
+      average_rating(attribute) * 100 / rateable_range.end
     end
     
     def was_rated_by?(user, attribute=nil)
@@ -77,7 +78,7 @@ module MakeRateable
       result = ""
       rating = average_rating_rounded(options[:attribute])
       rating.times { result << image_tag(options[:image_rated]) }
-      (max_rating - rating).times { result << image_tag(options[:image_unrated]) }
+      (rateable_range.end - rating).times { result << image_tag(options[:image_unrated]) }
       
       result
     end
