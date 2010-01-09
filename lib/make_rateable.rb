@@ -5,6 +5,7 @@ module MakeRateable
   
   module ClassMethods
     def make_rateable(options={})
+      include ActionView::Helpers
       has_many :ratings, :as => :rateable
       
       options[:max_rating] ||= 5
@@ -34,7 +35,7 @@ module MakeRateable
     def average_rating(attribute=nil)
       all_ratings = ratings.find(:all, :conditions => {:rateable_attribute => attribute})
       return 0.0 if all_ratings.empty?
-      all_ratings.sum(:score) / all_ratings.size
+      all_ratings.sum(&:rating) / all_ratings.size
     end
     
     def average_rating_rounded(attribute=nil)
@@ -55,13 +56,13 @@ module MakeRateable
     
     def visualize_average_rating(options={})
       options[:attribute] ||= nil
-      options[:active_image] ||= "ratings/time_blue.png"
-      options[:inactive_image] ||= "ratings/time_grey.png"
+      options[:image_rated] ||= "ratings/star_rated.png"
+      options[:image_unrated] ||= "ratings/star_unrated.png"
       
       result = ""
       rating = average_rating_rounded(options[:attribute])
-      rating.times { result << image_tag(options[:active_image]) }
-      (max_rating - rating).times { result << image_tag(options[:inactive_image]) }
+      rating.times { result << image_tag(options[:image_rated]) }
+      (max_rating - rating).times { result << image_tag(options[:image_unrated]) }
       
       result
     end
