@@ -73,7 +73,7 @@ module MakeRateable
       
       if method.to_s.starts_with?("rate_") && rateable_attributes.include?(attribute.to_sym)
         # this will find method calls like rate_accuracy
-        rate(args[0], args[1], attribute)
+        rate(args[0], args[1], attribute) unless [args[0], args[1]].include?(nil)
       end
     end
     
