@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "generators/USAGE",
      "generators/make_rateable_generator.rb",
      "generators/templates/migration.rb",
+     "generators/templates/star_hover.png",
      "generators/templates/star_rated.png",
      "generators/templates/star_unrated.png",
      "init.rb",

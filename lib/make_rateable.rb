@@ -74,15 +74,15 @@ module MakeRateable
       options[:attribute] ||= nil
       options[:image_rated] ||= "ratings/star_rated.png"
       options[:image_unrated] ||= "ratings/star_unrated.png"
-      options[:image_hover] ||= 
+      options[:image_hover] ||= "ratings/star_hover.png"
       
       result = ""
       rating = average_rating_rounded(options[:attribute])
       rating.times do
         result << if options[:user_can_rate]
-          image_tag
+          image_tag(options[:image_rated], :onmouseover => "this.src = '/images/#{options[:image_hover]}';", :onmouseout => "this.src = '/images/#{options[:image_rated]}';")
         else
-          image_tag(options[:image_rated]) 
+          image_tag(options[:image_rated])
         end
       end
       (rateable_range.end - rating).times do
