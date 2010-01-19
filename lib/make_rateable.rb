@@ -74,11 +74,20 @@ module MakeRateable
       options[:attribute] ||= nil
       options[:image_rated] ||= "ratings/star_rated.png"
       options[:image_unrated] ||= "ratings/star_unrated.png"
+      options[:image_hover] ||= 
       
       result = ""
       rating = average_rating_rounded(options[:attribute])
-      rating.times { result << image_tag(options[:image_rated]) }
-      (rateable_range.end - rating).times { result << image_tag(options[:image_unrated]) }
+      rating.times do
+        result << if options[:user_can_rate]
+          image_tag
+        else
+          image_tag(options[:image_rated]) 
+        end
+      end
+      (rateable_range.end - rating).times do
+        result << image_tag(options[:image_unrated])
+      end
       
       result
     end

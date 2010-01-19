@@ -5,6 +5,7 @@ class MakeRateableGenerator < Rails::Generator::Base
       m.directory "public/images/ratings"
       m.file "star_rated.png", "public/images/ratings/star_rated.png"
       m.file "star_unrated.png", "public/images/ratings/star_unrated.png"
+      m.file "star_hover.png", "public/images/ratings/star_hover.png"
     end
   end
 end
