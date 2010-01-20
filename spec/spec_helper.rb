@@ -20,4 +20,5 @@ end
 
 class Project < ActiveRecord::Base
   rateable_attributes :usability, :performance, :functionality
+  validates_presence_of :name
 end

@@ -11,7 +11,7 @@ module RateableAttributes
       options = args.extract_options!
       options[:range] ||= 1..5
       
-      { :rateable_range => options[:range], :rateable_attributes => args }.each do |accessor, value|
+      { :rateable_range => options[:range], :rateables => args }.each do |accessor, value|
         next if respond_to?(accessor)
         class_inheritable_accessor accessor
         attr_protected accessor
@@ -28,11 +28,11 @@ module RateableAttributes
   
   module InstanceMethods
     def is_valid_rateable_attribute?(attribute)
-      attribute.nil? || rateable_attributes.include?(attribute.to_sym)
+      attribute.nil? || rateables.include?(attribute.to_sym)
     end
     
     def validate_rating_data!(rating, attribute)
-      raise "#{attribute} is not valid for this model. Choose one of the following: #{rateable_attributes.join(', ')}" unless is_valid_rateable_attribute?(attribute)
+      raise "#{attribute} is not valid for this model. Choose one of the following: #{rateables.join(', ')}" unless is_valid_rateable_attribute?(attribute)
       raise "The rating #{rating} is not in allowed rating range: #{rateable_range.to_s}" unless rateable_range.include?(rating)
       true
     end
@@ -104,7 +104,7 @@ module RateableAttributes
 
       # this will find method calls like rate_accuracy
       attribute = method.to_s.split("rate_").last
-      rate(args[0], args[1], attribute) if rateable_attributes.include?(attribute.to_sym) && ![args[0], args[1]].include?(nil)
+      rate(args[0], args[1], attribute) if rateables.include?(attribute.to_sym) && ![args[0], args[1]].include?(nil)
     end 
   end
 end
