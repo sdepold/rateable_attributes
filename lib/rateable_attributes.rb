@@ -75,6 +75,7 @@ module RateableAttributes
       options[:image_rated] ||= "ratings/star_rated.png"
       options[:image_unrated] ||= "ratings/star_unrated.png"
       options[:image_hover] ||= "ratings/star_hover.png"
+      options[:click_url] ||= ""
 
       result = ""
       rating = average_rating_rounded(options[:attribute])
@@ -86,8 +87,9 @@ module RateableAttributes
         
         if options[:enable_rating]
           image_options.merge!({
-            :onmousemove => "rateableAttributesHoverRating(#{rating}, '#{id}', #{i}, '#{options[:image_hover]}')",
-            :onmouseout => "rateableAttributesUnhoverRating(#{rating}, #{rateable_range.end}, '#{id}', '#{options[:image_rated]}', '#{options[:image_unrated]}')"
+            :onmousemove => "rateableAttributesHoverRatingImage(#{rating}, '#{id}', #{i}, '#{options[:image_hover]}')",
+            :onmouseout => "rateableAttributesUnhoverRatingImage(#{rating}, #{rateable_range.end}, '#{id}', '#{options[:image_rated]}', '#{options[:image_unrated]}')",
+            :onclick => "rateableAttributesClickRatingImage('#{options[:click_url]}', #{i + 1}, '#{options[:attribute]}')"
           })
         end
         
