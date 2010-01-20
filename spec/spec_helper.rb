@@ -1,5 +1,7 @@
 require 'rubygems'
 require "active_record"
+require "action_view"
+require "rateable_attributes"
 require File.dirname(__FILE__)+"/../generators/templates/migration.rb"
 
 ActiveRecord::Base.establish_connection({
@@ -17,5 +19,5 @@ ActiveRecord::Schema.define(:version => 1) do
 end
 
 class Project < ActiveRecord::Base
-  # rateable_attributes :usability, :performance, :functionality
+  rateable_attributes :usability, :performance, :functionality
 end

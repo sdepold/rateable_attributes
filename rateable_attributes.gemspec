@@ -21,12 +21,17 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "generators/USAGE",
+     "generators/rateable_attributes_generator.rb",
      "generators/templates/migration.rb",
      "generators/templates/star_hover.png",
      "generators/templates/star_rated.png",
      "generators/templates/star_unrated.png",
      "init.rb",
-     "lib/rating.rb"
+     "lib/rateable_attributes.rb",
+     "lib/rating.rb",
+     "rateable_attributes.gemspec",
+     "spec/make_rateable_spec.rb",
+     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/sdepold/rateable_attributes}
   s.rdoc_options = ["--charset=UTF-8"]
