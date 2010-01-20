@@ -80,18 +80,18 @@ module RateableAttributes
       rating = average_rating_rounded(options[:attribute])
       
       rateable_range.end.times do |i|
-        id = "#{self.class.to_s.downcase}_#{options[:attribute] || "general"}_#{self.id}_#{i}"
-        options = {:id => id}
+        id = "#{self.class.to_s.downcase}_#{options[:attribute] || "general"}_#{self.id}"
+        image_options = {:id => "#{id}_#{i}"}
+        image = ((i + 1) <= rating) ? options[:image_rated] : options[:image_unrated]
         
         if options[:enable_rating]
-          options.merge({
-            :onmouseover => "this.src = '/images/#{options[:image_hover]}';",
-            :onmouseout => "this.src = '/images/#{options[:image_rated]}';",
+          image_options.merge!({
+            :onmousemove => "rateableAttributesHoverRating(#{rating}, '#{id}', #{i}, '#{options[:image_hover]}')",
+            :onmouseout => "rateableAttributesUnhoverRating(#{rating}, #{rateable_range.end}, '#{id}', '#{options[:image_rated]}', '#{options[:image_unrated]}')"
           })
         end
         
-        image = ((i + 1) <= rating) ? options[:image_rated] : options[:image_unrated]
-        result << image_tag(options[:image_rated], options)
+        result << image_tag(image, image_options)
       end
       
       result
