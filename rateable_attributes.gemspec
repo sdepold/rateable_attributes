@@ -4,12 +4,12 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{make_rateable}
+  s.name = %q{rateable_attributes}
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sascha Depold"]
-  s.date = %q{2010-01-19}
+  s.date = %q{2010-01-20}
   s.description = %q{Rate multiple attributes of models with Active Record.}
   s.email = %q{dev@depold.com}
   s.extra_rdoc_files = [
@@ -21,21 +21,22 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "generators/USAGE",
-     "generators/make_rateable_generator.rb",
      "generators/templates/migration.rb",
      "generators/templates/star_hover.png",
      "generators/templates/star_rated.png",
      "generators/templates/star_unrated.png",
      "init.rb",
-     "lib/make_rateable.rb",
-     "lib/rating.rb",
-     "make_rateable.gemspec"
+     "lib/rating.rb"
   ]
-  s.homepage = %q{http://github.com/sdepold/make_rateable}
+  s.homepage = %q{http://github.com/sdepold/rateable_attributes}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Rate multiple attributes of models with Active Record.}
+  s.test_files = [
+    "spec/make_rateable_spec.rb",
+     "spec/spec_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

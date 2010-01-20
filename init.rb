@@ -1,1 +1,1 @@
-require "make_rateable"
+require "rateable_attributes"

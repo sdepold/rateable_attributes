@@ -1,10 +1,10 @@
-module MakeRateable
+module RateableAttributes
   def self.included(base)
     base.extend ClassMethods
   end
   
   module ClassMethods
-    def make_rateable(*args)
+    def rateable_attributes(*args)
       include ActionView::Helpers
       has_many :ratings, :as => :rateable
       
@@ -18,8 +18,8 @@ module MakeRateable
         self.send("#{accessor}=", value)
       end
       
-      include MakeRateable::ClassMethods
-      include MakeRateable::InstanceMethods
+      include RateableAttributes::ClassMethods
+      include RateableAttributes::InstanceMethods
     end
   end
   
@@ -75,18 +75,23 @@ module MakeRateable
       options[:image_rated] ||= "ratings/star_rated.png"
       options[:image_unrated] ||= "ratings/star_unrated.png"
       options[:image_hover] ||= "ratings/star_hover.png"
-      
+
       result = ""
       rating = average_rating_rounded(options[:attribute])
-      rating.times do
-        result << if options[:user_can_rate]
-          image_tag(options[:image_rated], :onmouseover => "this.src = '/images/#{options[:image_hover]}';", :onmouseout => "this.src = '/images/#{options[:image_rated]}';")
-        else
-          image_tag(options[:image_rated])
+      
+      rateable_range.end.times do |i|
+        id = "#{self.class.to_s.downcase}_#{options[:attribute] || "general"}_#{self.id}_#{i}"
+        options = {:id => id}
+        
+        if options[:enable_rating]
+          options.merge({
+            :onmouseover => "this.src = '/images/#{options[:image_hover]}';",
+            :onmouseout => "this.src = '/images/#{options[:image_rated]}';",
+          })
         end
-      end
-      (rateable_range.end - rating).times do
-        result << image_tag(options[:image_unrated])
+        
+        image = ((i + 1) <= rating) ? options[:image_rated] : options[:image_unrated]
+        result << image_tag(options[:image_rated], options)
       end
       
       result
@@ -105,5 +110,5 @@ module MakeRateable
 end
 
 class ActiveRecord::Base
-  include MakeRateable
+  include RateableAttributes
 end

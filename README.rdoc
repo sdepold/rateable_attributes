@@ -1,6 +1,6 @@
-= MakeRateable
+= RateableAttributes
 
-MakeRateable is a re-implementation of ActsAsRateable for multiple attribute support.
+RateableAttributes is a re-implementation of ActsAsRateable for multiple attribute support.
 
 == Usage
 
@@ -8,13 +8,13 @@ MakeRateable is a re-implementation of ActsAsRateable for multiple attribute sup
 
 In order to create the rating table just run the following command:
   
-  script/generate make_rateable
+  script/generate rateable_attributes
   
 This will generate a migration. Run rake db:migrate.
 
 === In the model
   
-  make_rateable :graphics, :sound, :whatever, :range => 1..5
+  rateable_attributes :graphics, :sound, :whatever, :range => 1..5
   
 This allows you to rate the model for the attributes graphics, sound and whatever.
 To do so use

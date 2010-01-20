@@ -1,4 +1,4 @@
-class MakeRateableMigration < ActiveRecord::Migration
+class RateableAttributesMigration < ActiveRecord::Migration
   def self.up
     create_table :ratings do |t|
       t.integer :user_id
