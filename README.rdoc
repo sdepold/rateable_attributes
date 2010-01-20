@@ -4,11 +4,18 @@ RateableAttributes is a re-implementation of ActsAsRateable for multiple attribu
 
 == Usage
 
+=== Installation
+
+To install as plugin:
+
+  script/plugin install git://github.com/sdepold/rateable_attributes.git
+
 === Preparation
 
-In order to create the rating table just run the following command:
+In order to create the rating table just run the following commands:
   
   script/generate rateable_attributes
+  rake db:migrate
   
 This will generate a migration. Run rake db:migrate.
 
@@ -21,5 +28,3 @@ To do so use
 
   my_model.rate(3, a_user[, :the_attribute]) # you can just ignore the attribute to create a general rating
   my_model.rate_graphics(3, a_user) # equals my_model.rate(3, a_user, :graphics)
-  
-=== To be continued...
