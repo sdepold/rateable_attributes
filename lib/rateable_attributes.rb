@@ -39,7 +39,7 @@ module RateableAttributes
     
     def rate(rating, user, attribute=nil)
       validate_rating_data!(rating, attribute)
-      return rating_from(user, attribute) if was_rated_by?(user, attribute)
+      return rating_by(user, attribute) if was_rated_by?(user, attribute)
       Rating.create({:user => user, :rating => rating, :rateable_attribute => attribute, :rateable => self}) 
     end
     
@@ -66,8 +66,8 @@ module RateableAttributes
       ratings.find(:first, :conditions => {:user_id => user.id, :rateable_attribute => attribute}).present?
     end
     
-    def ratings_by(user, attribute=nil)
-      ratings.find(:all, :conditions => {:user => user, :rateable_attribute => attribute})
+    def rating_by(user, attribute=nil)
+      ratings.find(:first, :conditions => {:user_id => user.id, :rateable_attribute => attribute})
     end
     
     def visualize_average_rating(options={})
