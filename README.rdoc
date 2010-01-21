@@ -28,3 +28,25 @@ To do so use
 
   my_model.rate(3, a_user[, :the_attribute]) # you can just ignore the attribute to create a general rating
   my_model.rate_graphics(3, a_user) # equals my_model.rate(3, a_user, :graphics)
+
+=== Visualizing the average rating
+
+RateableAttributes a method to the model called visualize_average_rating.
+It can be called the following options:
+
+- attribute = The attribute you want to display. Default: nil
+- image_rated = The image/symbol you wish to be shown as reached rating. Default: A yellow star
+- image_unrated = The image/symbol you wish to be shown as unreached rating. Default: A white star
+- image_hover = The image/symbol you wish to be shown when hovering one of the rating images (see next option). Default: An orange star
+- enable_rating = Should the user be able to click and rate?
+- click_url = The URL which gets called, when a user clicked on a star to rate the model.
+
+When you enable the rating option, the controller should return a json object as follows:
+
+  {new_rating: 2}
+  
+Important as well is, that you include the generated javascript file. Just do the following in your documents head:
+
+  = javascript_include_tag "rateable_attributes.js"
+  
+The javascript is not using any frameworks so be free to choose the one you want to.
