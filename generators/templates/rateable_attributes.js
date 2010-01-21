@@ -10,11 +10,15 @@ function rateableAttributesUnhoverRatingImage(objectRating, maxRating, idPrefix,
   }
 }
 
-function rateableAttributesClickRatingImage(ajaxURL, clickedRating, clickedAttribute) {
+function rateableAttributesClickRatingImage(ajaxURL, clickedRating, clickedAttribute, maxRating, idPrefix, ratedImage, unratedImage) {
   new Ajax.Request(ajaxURL, {
     parameters: { 
       rating: clickedRating,
       attribute: clickedAttribute
+    },
+    onSuccess:function(data) {
+      var result = data.responeJSON;
+      rateableAttributesUnhoverRatingImage(result.new_rating, maxRating, idPrefix, ratedImage, unratedImage);
     }
   });
 }

@@ -49,6 +49,7 @@ module RateableAttributes
     end
     
     def average_rating(attribute=nil)
+      attribute = attribute.to_s unless attribute.nil?
       all_ratings = ratings.find(:all, :conditions => {:rateable_attribute => attribute})
       return 0.0 if all_ratings.empty?
       all_ratings.sum(&:rating) / all_ratings.size
@@ -63,10 +64,12 @@ module RateableAttributes
     end
     
     def was_rated_by?(user, attribute=nil)
+      attribute = attribute.to_s unless attribute.nil?
       ratings.find(:first, :conditions => {:user_id => user.id, :rateable_attribute => attribute}).present?
     end
     
     def rating_by(user, attribute=nil)
+      attribute = attribute.to_s unless attribute.nil?
       ratings.find(:first, :conditions => {:user_id => user.id, :rateable_attribute => attribute})
     end
     
@@ -89,7 +92,7 @@ module RateableAttributes
           image_options.merge!({
             :onmousemove => "rateableAttributesHoverRatingImage(#{rating}, '#{id}', #{i}, '#{options[:image_hover]}')",
             :onmouseout => "rateableAttributesUnhoverRatingImage(#{rating}, #{rateable_range.end}, '#{id}', '#{options[:image_rated]}', '#{options[:image_unrated]}')",
-            :onclick => "rateableAttributesClickRatingImage('#{options[:click_url]}', #{i + 1}, '#{options[:attribute]}')"
+            :onclick => "rateableAttributesClickRatingImage('#{options[:click_url]}', #{i + 1}, '#{options[:attribute]}', #{rateable_range.end}, '#{id}', '#{options[:image_rated]}', '#{options[:image_unrated]}')"
           })
         end
         
