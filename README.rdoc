@@ -49,4 +49,4 @@ Important as well is, that you include the generated javascript file. Just do th
 
   = javascript_include_tag "rateable_attributes.js"
   
-The javascript is not using any frameworks so feel free to choose the one you want to.
+The javascript uses the prototype plugin. Feel free to change it for JQuery if you are using it.
