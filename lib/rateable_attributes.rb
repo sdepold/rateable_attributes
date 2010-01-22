@@ -5,7 +5,6 @@ module RateableAttributes
   
   module ClassMethods
     def rateable_attributes(*args)
-      include ActionView::Helpers
       has_many :ratings, :as => :rateable
       
       options = args.extract_options!
@@ -71,35 +70,6 @@ module RateableAttributes
     def rating_by(user, attribute=nil)
       attribute = attribute.to_s unless attribute.nil?
       ratings.find(:first, :conditions => {:user_id => user.id, :rateable_attribute => attribute})
-    end
-    
-    def visualize_average_rating(options={})
-      options[:attribute] ||= nil
-      options[:image_rated] ||= "ratings/star_rated.png"
-      options[:image_unrated] ||= "ratings/star_unrated.png"
-      options[:image_hover] ||= "ratings/star_hover.png"
-      options[:click_url] ||= ""
-
-      result = ""
-      rating = average_rating_rounded(options[:attribute])
-      
-      rateable_range.end.times do |i|
-        id = "#{self.class.to_s.downcase}_#{options[:attribute] || "general"}_#{self.id}"
-        image_options = {:id => "#{id}_#{i}"}
-        image = ((i + 1) <= rating) ? options[:image_rated] : options[:image_unrated]
-        
-        if options[:enable_rating]
-          image_options.merge!({
-            :onmousemove => "rateableAttributesHoverRatingImage(#{rating}, '#{id}', #{i}, '#{options[:image_hover]}')",
-            :onmouseout => "rateableAttributesUnhoverRatingImage(#{rating}, #{rateable_range.end}, '#{id}', '#{options[:image_rated]}', '#{options[:image_unrated]}')",
-            :onclick => "rateableAttributesClickRatingImage('#{options[:click_url]}', #{i + 1}, '#{options[:attribute]}', #{rateable_range.end}, '#{id}', '#{options[:image_rated]}', '#{options[:image_unrated]}')"
-          })
-        end
-        
-        result << image_tag(image, image_options)
-      end
-      
-      result
     end
     
     private

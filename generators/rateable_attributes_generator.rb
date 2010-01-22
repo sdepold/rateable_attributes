@@ -7,6 +7,7 @@ class RateableAttributesGenerator < Rails::Generator::Base
       m.file "star_unrated.png", "public/images/ratings/star_unrated.png"
       m.file "star_hover.png", "public/images/ratings/star_hover.png"
       m.file "rateable_attributes.js", "public/javascripts/rateable_attributes.js"
+      m.file "rateable_attributes_helper.rb", "app/helpers/rateable_attributes_helper.rb"
     end
   end
 end
