@@ -13,6 +13,7 @@ begin
     gemspec.homepage    = "http://github.com/sdepold/rateable_attributes"
     gemspec.authors     = ["Sascha Depold"]
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler not available. Install it with: gem install jeweler"
 end
