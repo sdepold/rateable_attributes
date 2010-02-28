@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
      "generators/rateable_attributes_generator.rb",
      "generators/templates/migration.rb",
      "generators/templates/rateable_attributes.js",
+     "generators/templates/rateable_attributes_helper.rb",
      "generators/templates/star_hover.png",
      "generators/templates/star_rated.png",
      "generators/templates/star_unrated.png",
